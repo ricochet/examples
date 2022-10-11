@@ -1,0 +1,16 @@
+# Each dependency specifies a path where wasm-compose may locate a dependency, rather than searching the configured search paths.
+# A dependency has the following fields:
+# path : string - the path to the WebAssembly component file; the path is relative to the configuration file.
+# import : string (optional) - the name to use for importing the component. If not present, the component at the given path will be defined directly in the composed component.
+# Dependencies may be specified as a string rather than a map, in which case it is treated as having a path field with the value of the string.
+
+dependencies:
+  keyvalue: ./keyvalue/target/wasm32-unknown-unknown/debug/keyvalue.wasm 
+  httpserver: ./httpserver/target/wasm32-unknown-unknown/debug/httpserver.wasm
+  wasmbus_sender: ./wasmbus-sender/target/wasm32-unknown-unknown/debug/wasmbus_sender.wasm
+
+# search-paths:
+#   - ./actor/target/wasm32-unknown-unknown/debug
+#   - ./httpserver/target/wasm32-unknown-unknown/debug
+#   - ./keyvalue/target/wasm32-unknown-unknown/debug
+#   - ./wasmbus-sender/target/wasm32-unknown-unknown/debug

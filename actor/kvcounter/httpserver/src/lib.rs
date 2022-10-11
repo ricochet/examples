@@ -1,9 +1,6 @@
 use serde::{Deserialize, Serialize};
 use wasmbus_receiver::*;
 
-wit_bindgen_rust::import!("../httpserver.wit");
-wit_bindgen_rust::export!("../wasmbus-receiver.wit");
-
 const HANDLE_REQUEST_METHOD: &str = "HttpServer.HandleRequest";
 
 // TODO: We need to improve codegen to allow for hooking in custom derive traits on generated wit
@@ -86,9 +83,9 @@ impl From<httpserver::HttpResponse> for HttpResponseInternal {
 }
 
 #[derive(Default, Clone)]
-pub struct WasmbusReceiver;
+pub struct Component;
 
-impl wasmbus_receiver::WasmbusReceiver for WasmbusReceiver {
+impl wasmbus_receiver::WasmbusReceiver for Component {
     fn receive(msg: Message) -> Result<Payload, RpcError> {
         if msg.method != HANDLE_REQUEST_METHOD {
             return Err(RpcError::MethodNotHandled(format!(
@@ -134,3 +131,5 @@ fn httpserver_to_wasmbus_error(e: httpserver::RpcError) -> RpcError {
         httpserver::RpcError::Timeout(m) => RpcError::Timeout(m),
     }
 }
+
+wasmbus_receiver::export!(Component);

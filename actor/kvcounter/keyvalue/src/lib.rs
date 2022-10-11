@@ -2,9 +2,6 @@ use keyvalue::*;
 use serde::{Deserialize, Serialize};
 use wasmbus_sender as wasmbus;
 
-wit_bindgen_rust::export!("../keyvalue.wit");
-wit_bindgen_rust::import!("../wasmbus-sender.wit");
-
 #[derive(Clone, Debug, Default, Deserialize, Eq, PartialEq, Serialize)]
 struct IncrementRequest {
     /// name of value to increment
@@ -16,9 +13,9 @@ struct IncrementRequest {
 }
 
 #[derive(Default, Clone)]
-pub struct Keyvalue;
+pub struct Component;
 
-impl keyvalue::Keyvalue for Keyvalue {
+impl Keyvalue for Component {
     fn increment(key: String, value: i32) -> Result<i32, RpcError> {
         let payload = serde_json::to_vec(&IncrementRequest { key, value })
             .map_err(|e| RpcError::Ser(e.to_string()))?;
@@ -53,3 +50,5 @@ fn wasmbus_to_keyvalue_error(e: wasmbus::RpcError) -> RpcError {
         wasmbus::RpcError::Timeout(m) => RpcError::Timeout(m),
     }
 }
+
+keyvalue::export!(Component);

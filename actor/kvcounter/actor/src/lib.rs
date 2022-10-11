@@ -1,12 +1,9 @@
 use httpserver::*;
 
-wit_bindgen_rust::import!("../keyvalue.wit");
-wit_bindgen_rust::export!("../httpserver.wit");
-
 #[derive(Default, Clone)]
-pub struct Httpserver;
+pub struct Component;
 
-impl httpserver::Httpserver for Httpserver {
+impl Httpserver for Component {
     fn handle_request(req: HttpRequest) -> Result<HttpResponse, RpcError> {
         // make friendlier key
         let key = format!("counter:{}", req.path.replace('/', ":"));
@@ -44,3 +41,5 @@ fn map_wit_err(e: keyvalue::RpcError) -> RpcError {
     // TODO: Actually map the error
     RpcError::Other(format!("{:?}", e))
 }
+
+httpserver::export!(Component);

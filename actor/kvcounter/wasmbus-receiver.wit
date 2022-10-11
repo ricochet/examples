@@ -1,4 +1,4 @@
 use * from error-type
 use * from wasmbus-common
 
-receive: function(msg: message) -> expected<payload, rpc-error>
+receive: func(msg: message) -> result<payload, rpc-error>

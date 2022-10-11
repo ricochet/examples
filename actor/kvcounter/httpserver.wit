@@ -23,4 +23,4 @@ record http-response {
     body: list<u8>,
 }
 
-handle-request: function(req: http-request) -> expected<http-response, rpc-error>
+handle-request: func(req: http-request) -> result<http-response, rpc-error>

@@ -1,7 +1,0 @@
-[workspace]
-members = ["actor", "keyvalue", "wasmbus-sender", "httpserver"]
-
-[profile.release]
-# Optimize for small code size
-lto = true
-opt-level = "s"

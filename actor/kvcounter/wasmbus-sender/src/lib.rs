@@ -1,11 +1,8 @@
 use wasmbus_sender::*;
 
-wit_bindgen_rust::export!("../wasmbus-sender.wit");
+struct Component;
 
-#[derive(Default, Clone)]
-pub struct WasmbusSender;
-
-impl wasmbus_sender::WasmbusSender for WasmbusSender {
+impl WasmbusSender for Component {
     fn send(
         msg: Message,
         contract_name: String,
@@ -20,3 +17,5 @@ impl wasmbus_sender::WasmbusSender for WasmbusSender {
         Ok(serde_json::to_vec(&42).unwrap())
     }
 }
+
+wasmbus_sender::export!(Component);
